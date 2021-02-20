@@ -43,5 +43,4 @@ public class CarroDto {
 		this.tipo = tipo;
 	}
 
-	
 }
