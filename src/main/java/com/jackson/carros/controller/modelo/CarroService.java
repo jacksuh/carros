@@ -21,21 +21,21 @@ public class CarroService {
 	private CarroRepository repository;
 	
 	
-	public List<CarroDto> getCarros(Pageable pageable) {
+	public List<CarroDto> getCarros() {
 
-		return repository.findAll().stream().map(CarroDto::new).collect(Collectors.toList());
+		return repository.findAll().stream().map(CarroDto::create).collect(Collectors.toList());
     }
 
 
-	public Optional<Carro> getCarroById(Long id) {
-		return repository.findById(id);
+	public Optional<CarroDto> getCarroById(Long id) {
+		return repository.findById(id).map(CarroDto::create);
 
 	}
 
 
 	public List<CarroDto> getCarroByTipo(String tipo) {
 
-		return repository.findByTipo(tipo).stream().map(CarroDto::new).collect(Collectors.toList());
+		return repository.findByTipo(tipo).stream().map(CarroDto::create).collect(Collectors.toList());
 	}
 
 
@@ -45,8 +45,8 @@ public class CarroService {
 	}
 
 
-	public Carro update(Carro carro, Long id) {
-		Optional<Carro> optional = getCarroById(id);
+	public CarroDto update(Carro carro, Long id) {
+		Optional<Carro> optional = repository.findById(id);
 		if(optional.isPresent()){
 			Carro db = optional.get();
 			
@@ -55,7 +55,7 @@ public class CarroService {
 			
 			repository.save(db);
 			
-			return db;
+			return CarroDto.create(db);
 		}else {
 			throw new RuntimeException("Não foi possivel atualizar o registro");
 		}
@@ -64,7 +64,7 @@ public class CarroService {
 
 
 	public void delete(Long id) {
-		Optional<Carro> carro = getCarroById(id);
+		Optional<Carro> carro = repository.findById(id);
 		if(carro.isPresent()){
 			repository.deleteById(id);
 		}

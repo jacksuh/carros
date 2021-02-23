@@ -1,13 +1,15 @@
 package com.jackson.carros;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.jackson.carros.controller.dto.CarroDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -54,9 +56,9 @@ public class CarrosServiceTest {
     @Test
     public void testLista() {
 
-        Page<Carro> carros = repository.getCarros(PageRequest.of(0,29));
+        List<CarroDto> carros = repository.getCarros(PageRequest.of(0,29));
 
-        Assert.assertEquals(29, carros.getSize());
+        Assert.assertEquals(29, carros.size());
     }
 
    

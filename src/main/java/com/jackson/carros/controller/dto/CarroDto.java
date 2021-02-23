@@ -23,7 +23,7 @@ public class CarroDto {
      */
 
     public static CarroDto create(Carro carro) {
-        ModelMapper modelMapper = new ModelMapper() {
-            return modelMapper.map(carro, CarroDto.class);
-        };
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(carro, CarroDto.class);
+    }
 }
