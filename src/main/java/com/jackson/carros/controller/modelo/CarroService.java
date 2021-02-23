@@ -5,10 +5,10 @@ package com.jackson.carros.controller.modelo;
 import com.jackson.carros.controller.dto.CarroDto;
 import com.jackson.carros.repository.CarroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,9 +39,14 @@ public class CarroService {
 	}
 
 
-	public Carro insert(Carro carro) {
-		return repository.save(carro);
+	public CarroDto insert(Carro carro) {
+		return CarroDto.create(repository.save(carro));
 		
+	}
+
+	private URI getUri(Long id) {
+		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(id).toUri();
 	}
 
 

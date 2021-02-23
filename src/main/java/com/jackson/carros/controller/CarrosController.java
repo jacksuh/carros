@@ -36,10 +36,9 @@ public class CarrosController {
 	
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
-	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0")
-	Integer page, @RequestParam(value = "size", defaultValue = "10" ) Integer size ){
+	public ResponseEntity<List<CarroDto>> get(){
 		
-		List<CarroDto> carros = service.getCarros(PageRequest.of(page, size));
+		List<CarroDto> carros = service.getCarros();
 		return ResponseEntity.ok(carros);
 
 	}
@@ -48,11 +47,8 @@ public class CarrosController {
 	@GetMapping("/{id}")
 	@CacheEvict(value = "listaDeCarros", allEntries = true)
 	public ResponseEntity get(@PathVariable("id") Long id){
-		Optional<Carro> carro = service.getCarroById(id);
-		
-		return carro.isPresent()?
-				ResponseEntity.ok(carro.get()) :
-					ResponseEntity.notFound().build();		
+		Optional<CarroDto> carro = service.getCarroById(id);
+		return ResponseEntity.ok(carro);
 	}
 
 	
@@ -69,29 +65,33 @@ public class CarrosController {
 	@CacheEvict(value = "listaDeCarros")
 	@PostMapping
 	public String post(@RequestBody Carro carro){
-		Carro c = service.insert(carro);
-		
+		CarroDto c = service.insert(carro);
+
 		return "Carro Salvo com Sucesso" + c.getId();
 	}
-	
+
 	
 	@CacheEvict(value = "listaDeCarros")
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro){
+	public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Carro carro){
+
+		carro.setId(id);
+
+		CarroDto c = service.update(carro, id);
 		
-		Carro c = service.update(carro, id);
-		
-		return "Carro Atualizado com Sucesso" + c.getId();
+		return c != null ?
+				ResponseEntity.ok(c) :
+				ResponseEntity.notFound().build();
 	}
 	
 	
 	@CacheEvict(value = "listaDeCarros")
 	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") Long id){
+	public ResponseEntity delete(@PathVariable("id") Long id){
 		
 		service.delete(id);
 		
-		return "Carro Deletado com Sucesso";
+		return ResponseEntity.ok().build();
 	}
 	
 	
