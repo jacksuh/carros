@@ -2,6 +2,7 @@ package com.jackson.carros.controller.modelo;
 
 
 
+import com.jackson.carros.controller.dto.CarroDto;
 import com.jackson.carros.repository.CarroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,9 +21,9 @@ public class CarroService {
 	private CarroRepository repository;
 	
 	
-	public Page<Carro> getCarros(Pageable pageable) {
-        Page<Carro> list = repository.findAll(pageable);
-        return list;
+	public List<CarroDto> getCarros(Pageable pageable) {
+
+		return repository.findAll().stream().map(CarroDto::new).collect(Collectors.toList());
     }
 
 
@@ -32,8 +33,9 @@ public class CarroService {
 	}
 
 
-	public List<Carro> getCarroByTipo(String tipo) {
-		return repository.findByTipo(tipo);
+	public List<CarroDto> getCarroByTipo(String tipo) {
+
+		return repository.findByTipo(tipo).stream().map(CarroDto::new).collect(Collectors.toList());
 	}
 
 

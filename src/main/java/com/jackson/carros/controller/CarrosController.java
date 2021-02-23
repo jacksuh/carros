@@ -4,6 +4,7 @@ package com.jackson.carros.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.jackson.carros.controller.dto.CarroDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,10 +36,10 @@ public class CarrosController {
 	
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
-	public ResponseEntity<Page<Carro>> get(@RequestParam(value = "page", defaultValue = "0")
+	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0")
 	Integer page, @RequestParam(value = "size", defaultValue = "10" ) Integer size ){
 		
-		Page<Carro> carros = service.getCarros(PageRequest.of(page, size));
+		List<CarroDto> carros = service.getCarros(PageRequest.of(page, size));
 		return ResponseEntity.ok(carros);
 
 	}
@@ -58,7 +59,7 @@ public class CarrosController {
 	@GetMapping("/tipo/{tipo}")
 	@CacheEvict(value = "listaDeCarros")
 	public ResponseEntity get(@PathVariable("tipo") String tipo){
-		List<Carro> carros = service.getCarroByTipo(tipo);
+		List<CarroDto> carros = service.getCarroByTipo(tipo);
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
 				ResponseEntity.ok(carros);
