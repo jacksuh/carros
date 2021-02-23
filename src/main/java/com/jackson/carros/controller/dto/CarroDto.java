@@ -4,7 +4,7 @@ package com.jackson.carros.controller.dto;
 import com.jackson.carros.controller.modelo.Carro;
 import lombok.Data;
 
-@Data
+
 public class CarroDto {
 
 	private Long id;

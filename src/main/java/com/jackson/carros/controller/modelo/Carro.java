@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+import lombok.Setter;
+
 
 @Entity
 public class Carro {
@@ -21,6 +24,7 @@ public class Carro {
     private String descricao;
     private String urlFoto;
     private String urlVideo;
+    
     
 	public Long getId() {
 		return Id;
