@@ -36,9 +36,10 @@ public class CarrosController {
 	
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
-	public ResponseEntity<List<CarroDto>> get(){
+	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
+											  @RequestParam(value = "size", defaultValue = "10") Integer size){
 		
-		List<CarroDto> carros = service.getCarros();
+		List<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
 		return ResponseEntity.ok(carros);
 
 	}
@@ -54,8 +55,10 @@ public class CarrosController {
 	
 	@GetMapping("/tipo/{tipo}")
 	@CacheEvict(value = "listaDeCarros")
-	public ResponseEntity get(@PathVariable("tipo") String tipo){
-		List<CarroDto> carros = service.getCarroByTipo(tipo);
+	public ResponseEntity get(@PathVariable("tipo") String tipo,
+							  @RequestParam(value = "page", defaultValue = "0") Integer page,
+							  @RequestParam(value = "size", defaultValue = "10") Integer size){
+		List<CarroDto> carros = service.getCarroByTipo(tipo, PageRequest.of(page,size));
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
 				ResponseEntity.ok(carros);
