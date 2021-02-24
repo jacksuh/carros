@@ -53,13 +53,13 @@ public class CarrosServiceTest {
           
     }
 
-    /**@Test
+    @Test
     public void testLista() {
 
-        List<CarroDto> carros = repository.getCarros(PageRequest.of(1,29));
+        List<CarroDto> carros = repository.getCarros();
 
         Assert.assertEquals(29, carros.size());
-   **/
+    }
 }
 
 
