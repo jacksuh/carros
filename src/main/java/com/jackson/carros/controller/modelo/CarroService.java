@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public class CarroService {
 	private CarroRepository repository;
 	
 	
-	public List<CarroDto> getCarros(Pageable pageable) {
+	public Collection<CarroDto> getCarros(Pageable pageable) {
 
 		return repository.findAll(pageable).stream().map(CarroDto::create).collect(Collectors.toList());
     }
@@ -34,7 +35,7 @@ public class CarroService {
 	}
 
 
-	public List<CarroDto> getCarroByTipo(String tipo, Pageable pageable) {
+	public Collection<CarroDto> getCarroByTipo(String tipo, Pageable pageable) {
 
 		return repository.findByTipo(tipo,pageable).stream().map(CarroDto::create).collect(Collectors.toList());
 	}

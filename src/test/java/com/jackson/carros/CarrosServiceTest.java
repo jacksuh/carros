@@ -1,5 +1,6 @@
 package com.jackson.carros;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ public class CarrosServiceTest {
     @Test
     public void testLista() {
 
-        List<CarroDto> carros = repository.getCarros(PageRequest.of(0,29));
+        Collection<CarroDto> carros = repository.getCarros(PageRequest.of(0,29));
 
         Assert.assertEquals(29, carros.size());
     }

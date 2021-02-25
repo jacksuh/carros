@@ -1,6 +1,7 @@
 package com.jackson.carros.controller;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,6 @@ import com.jackson.carros.controller.dto.CarroDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,10 +36,10 @@ public class CarrosController {
 	
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
-	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Collection<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
 											  @RequestParam(value = "size", defaultValue = "10") Integer size){
 		
-		List<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
+		Collection<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
 		return ResponseEntity.ok(carros);
 
 	}
@@ -58,7 +58,7 @@ public class CarrosController {
 	public ResponseEntity get(@PathVariable("tipo") String tipo,
 							  @RequestParam(value = "page", defaultValue = "0") Integer page,
 							  @RequestParam(value = "size", defaultValue = "10") Integer size){
-		List<CarroDto> carros = service.getCarroByTipo(tipo, PageRequest.of(page,size));
+		Collection<CarroDto> carros = service.getCarroByTipo(tipo, PageRequest.of(page,size));
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
 				ResponseEntity.ok(carros);
