@@ -36,10 +36,10 @@ public class CarrosController {
 	
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
-	public ResponseEntity<Collection<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
 											  @RequestParam(value = "size", defaultValue = "10") Integer size){
 		
-		Collection<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
+		List<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
 		return ResponseEntity.ok(carros);
 
 	}
@@ -58,7 +58,7 @@ public class CarrosController {
 	public ResponseEntity get(@PathVariable("tipo") String tipo,
 							  @RequestParam(value = "page", defaultValue = "0") Integer page,
 							  @RequestParam(value = "size", defaultValue = "10") Integer size){
-		Collection<CarroDto> carros = service.getCarroByTipo(tipo, PageRequest.of(page,size));
+		List<CarroDto> carros = service.getCarroByTipo(tipo, PageRequest.of(page,size));
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
 				ResponseEntity.ok(carros);
@@ -70,7 +70,8 @@ public class CarrosController {
 	public String post(@RequestBody Carro carro){
 		CarroDto c = service.insert(carro);
 
-		return "Carro Salvo com Sucesso" + c.getId();
+        String s = "Carro Salvo com Sucesso" + c.getId();
+        return s;
 	}
 
 	

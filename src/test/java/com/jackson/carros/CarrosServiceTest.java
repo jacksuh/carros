@@ -57,7 +57,7 @@ public class CarrosServiceTest {
     @Test
     public void testLista() {
 
-        Collection<CarroDto> carros = repository.getCarros(PageRequest.of(0,29));
+        List<CarroDto> carros = repository.getCarros(PageRequest.of(0,29));
 
         Assert.assertEquals(29, carros.size());
     }

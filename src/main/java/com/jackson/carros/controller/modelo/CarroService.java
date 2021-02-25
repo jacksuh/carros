@@ -23,7 +23,7 @@ public class CarroService {
 	private CarroRepository repository;
 	
 	
-	public Collection<CarroDto> getCarros(Pageable pageable) {
+	public List<CarroDto> getCarros(Pageable pageable) {
 
 		return repository.findAll(pageable).stream().map(CarroDto::create).collect(Collectors.toList());
     }
@@ -35,7 +35,7 @@ public class CarroService {
 	}
 
 
-	public Collection<CarroDto> getCarroByTipo(String tipo, Pageable pageable) {
+	public List<CarroDto> getCarroByTipo(String tipo, Pageable pageable) {
 
 		return repository.findByTipo(tipo,pageable).stream().map(CarroDto::create).collect(Collectors.toList());
 	}

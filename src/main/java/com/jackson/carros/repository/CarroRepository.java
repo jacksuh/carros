@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface CarroRepository extends JpaRepository<Carro, Long>{
 
-	Collection<Carro> findByTipo(String tipo, Pageable pageable);
+	List<Carro> findByTipo(String tipo, Pageable pageable);
 }
