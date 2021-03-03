@@ -70,8 +70,7 @@ public class CarrosController {
 	public String post(@RequestBody Carro carro){
 		CarroDto c = service.insert(carro);
 
-        String s = "Carro Salvo com Sucesso" + c.getId();
-        return s;
+		return "Carro Salvo com Sucesso" + c.getId();
 	}
 
 	
