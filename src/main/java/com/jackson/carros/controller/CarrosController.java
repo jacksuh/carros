@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,6 @@ import com.jackson.carros.controller.modelo.Carro;
 import com.jackson.carros.controller.modelo.CarroService;
 
 
-
 @RestController
 @RequestMapping("/carros")
 public class CarrosController {
@@ -37,9 +37,10 @@ public class CarrosController {
 	@GetMapping
 	@Cacheable(value = "listaDeCarros")
 	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
-											  @RequestParam(value = "size", defaultValue = "10") Integer size){
+											  @RequestParam(value = "size", defaultValue = "10") Integer size,
+											  @RequestParam() String nome){
 		
-		List<CarroDto> carros = service.getCarros(PageRequest.of(page,size));
+		List<CarroDto> carros = service.getCarros(PageRequest.of(page, size, Sort.Direction.ASC, nome));
 		return ResponseEntity.ok(carros);
 
 	}
