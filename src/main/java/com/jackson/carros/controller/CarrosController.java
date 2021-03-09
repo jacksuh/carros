@@ -38,9 +38,9 @@ public class CarrosController {
 	@Cacheable(value = "listaDeCarros")
 	public ResponseEntity<List<CarroDto>> get(@RequestParam(value = "page", defaultValue = "0") Integer page,
 											  @RequestParam(value = "size", defaultValue = "10") Integer size,
-											  @RequestParam() String nome){
+											  @RequestParam() String id){
 		
-		List<CarroDto> carros = service.getCarros(PageRequest.of(page, size, Sort.Direction.ASC, nome));
+		List<CarroDto> carros = service.getCarros(PageRequest.of(page, size, Sort.Direction.ASC, id));
 		return ResponseEntity.ok(carros);
 
 	}
